@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateReminderDto } from './dto/create-reminder.dto';
 import { UpdateReminderDto } from './dto/update-reminder.dto';
+import { Reminder } from './entities/reminder.entity';
 
 @Injectable()
 export class ReminderService {
-  create(createReminderDto: CreateReminderDto) {
-    return 'This action adds a new reminder';
+  constructor(
+    @InjectRepository(Reminder)
+    private reminderRepository: Repository<Reminder>,
+  ) {
+    //
   }
 
-  findAll() {
-    return `This action returns all reminder`;
+  async create(createReminderDto: CreateReminderDto): Promise<Reminder> {
+    return await this.reminderRepository.save(createReminderDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} reminder`;
+  async findAllByUser(userId: number) {
+    return await this.reminderRepository.findBy({ userId });
   }
 
-  update(id: number, updateReminderDto: UpdateReminderDto) {
-    return `This action updates a #${id} reminder`;
+  async findOne(id: number) {
+    return await this.reminderRepository.findOneByOrFail({ id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} reminder`;
+  async update(id: number, updateReminderDto: UpdateReminderDto) {
+    await this.reminderRepository.update(id, updateReminderDto);
+
+    return await this.findOne(id);
+  }
+
+  async remove(id: number) {
+    return await this.reminderRepository.delete(id);
   }
 }
