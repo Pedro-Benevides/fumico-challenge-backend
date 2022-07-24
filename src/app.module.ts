@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ReminderModule } from './reminder/reminder.module';
 import 'dotenv/config';
 
 @Module({
@@ -15,6 +16,7 @@ import 'dotenv/config';
       database: process.env.DB_DATABASE,
       entities: [],
     }),
+    ReminderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
