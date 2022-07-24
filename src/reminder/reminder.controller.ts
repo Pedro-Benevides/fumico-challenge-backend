@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { ReminderService } from './reminder.service';
 import { CreateReminderDto } from './dto/create-reminder.dto';
 import { UpdateReminderDto } from './dto/update-reminder.dto';
 
-@Controller('reminder')
+@Controller('reminders')
 export class ReminderController {
   constructor(private readonly reminderService: ReminderService) {}
 
@@ -12,9 +21,9 @@ export class ReminderController {
     return this.reminderService.create(createReminderDto);
   }
 
-  @Get()
-  findAll() {
-    return this.reminderService.findAll();
+  @Get('/users/:userId')
+  findAll(@Param('userId') userId: string) {
+    return this.reminderService.findAllByUser(+userId);
   }
 
   @Get(':id')
@@ -25,6 +34,11 @@ export class ReminderController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReminderDto: UpdateReminderDto) {
     return this.reminderService.update(+id, updateReminderDto);
+  }
+
+  @Patch(':id/status')
+  updateStatus(@Param('id') id: string, @Query('check') check: string) {
+    return this.reminderService.update(+id, { status: +check ? true : false });
   }
 
   @Delete(':id')
