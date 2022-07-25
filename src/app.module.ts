@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { ReminderModule } from './reminder/reminder.module';
 import 'dotenv/config';
 import { Reminder } from './reminder/entities/reminder.entity';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { Reminder } from './reminder/entities/reminder.entity';
       synchronize: process.env.DB_SYNC as unknown as boolean,
     }),
     ReminderModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
