@@ -7,6 +7,7 @@ import 'dotenv/config';
 import { Reminder } from './reminder/entities/reminder.entity';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { UserModule } from './user/user.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [Reminder],
+      entities: [Reminder, User],
       synchronize: process.env.DB_SYNC as unknown as boolean,
     }),
     ReminderModule,
