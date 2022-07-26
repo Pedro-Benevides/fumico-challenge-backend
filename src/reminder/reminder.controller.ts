@@ -7,12 +7,15 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ReminderService } from './reminder.service';
 import { CreateReminderDto } from './dto/create-reminder.dto';
 import { UpdateReminderDto } from './dto/update-reminder.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
-@Controller('reminders')
+@Controller('api/reminders')
+@UseGuards(JwtAuthGuard)
 export class ReminderController {
   constructor(private readonly reminderService: ReminderService) {}
 
@@ -28,11 +31,14 @@ export class ReminderController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.reminderService.findOne(+id);
+    return this.reminderService.get(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReminderDto: UpdateReminderDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateReminderDto: UpdateReminderDto,
+  ) {
     return this.reminderService.update(+id, updateReminderDto);
   }
 
