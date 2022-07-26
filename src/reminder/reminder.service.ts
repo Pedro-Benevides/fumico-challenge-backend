@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateReminderDto } from './dto/create-reminder.dto';
@@ -22,14 +22,21 @@ export class ReminderService {
     return await this.reminderRepository.findBy({ userId });
   }
 
-  async findOne(id: number) {
-    return await this.reminderRepository.findOneByOrFail({ id });
+  async get(id: number) {
+    let reminder: Reminder;
+    try {
+      reminder = await this.reminderRepository.findOneByOrFail({ id });
+    } catch (error) {
+      throw new NotFoundException('Identificador Não Encontrado');
+    }
+
+    return reminder;
   }
 
   async update(id: number, updateReminderDto: UpdateReminderDto) {
     await this.reminderRepository.update(id, updateReminderDto);
 
-    return await this.findOne(id);
+    return await this.get(id);
   }
 
   async remove(id: number) {
