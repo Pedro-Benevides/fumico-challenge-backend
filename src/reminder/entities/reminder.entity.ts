@@ -17,15 +17,15 @@ export class Reminder {
   @Column()
   title: string;
 
-  @Column('text')
+  @Column({ type: 'text', nullable: true })
   description: string;
 
   @Column({ default: false })
   status: boolean;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @CreateDateColumn({ nullable: true, select: false })
+  createdAt?: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @UpdateDateColumn({ nullable: true, select: false })
+  updatedAt?: Date;
 }
