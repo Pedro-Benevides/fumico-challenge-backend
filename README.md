@@ -50,11 +50,11 @@ caso não possua o openssl, utilize este [site](https://generate.plus/en/base64)
 5. Inicie o servidor
 
 ```
-    nest start
+    npm run start
 ```
 
 para monitorar alterações utilize
 
 ```
-    nest start --watch
+    npm run start:dev
 ```
