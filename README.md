@@ -10,18 +10,24 @@ API para o [challenge-backend-fumi.co](https://github.com/fumi-co/fumico-challen
 
 # Build da Aplicação
 
-1. Clone o Repositorio ```
+1. Clone o Repositorio
+
+```
    git clone https://github.com/Pedro-Benevides/fumico-challenge-backend.git
 
-````
-2. Acesse o diretorio do projeto e instale as dependencias ```
-npm i
-````
+```
+
+2. Acesse o diretorio do projeto e instale as dependencias
+
+```
+   npm i
+
+```
 
 3. Gere um base64 para o seu JWT_SECRET
 
 ```
-openssl rand --base64 32
+    openssl rand --base64 32
 ```
 
 caso não possua o openssl, utilize este [site](https://generate.plus/en/base64")
@@ -44,11 +50,11 @@ caso não possua o openssl, utilize este [site](https://generate.plus/en/base64"
 5. Inicie o servidor
 
 ```
-nest start
+    nest start
 ```
 
 para monitorar alterações utilize
 
 ```
-nest start --watch
+    nest start --watch
 ```
