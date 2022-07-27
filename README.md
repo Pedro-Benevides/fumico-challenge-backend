@@ -1,14 +1,14 @@
-## Description
+## Descrição
 
 API para o [challenge-backend-fumi.co](https://github.com/fumi-co/fumico-challenge/blob/master/BACKEND.md)
 
-# Tecnologias
+## Tecnologias
 
 - Nestjs
 - Typescript
 - MySql (Server e Workbench)
 
-# Build da Aplicação
+## Build da Aplicação
 
 1. Clone o Repositorio
 
