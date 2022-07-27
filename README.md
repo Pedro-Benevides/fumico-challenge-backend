@@ -40,7 +40,7 @@ caso não possua o openssl, utilize este [site](https://generate.plus/en/base64)
 | ----------- | --------------------------------------------------------------------------------------------------------------------------- |
 | DB_DATABASE | Nome da conexão no banco de dados                                                                                           |
 | DB_TYPE     | Banco de dados que será utilizado (verifique valores validos na documentação do [TypeORM](https://typeorm.io/#quick-start)) |
-| DB_HOST     | Endereço do servidor do banco:Porta de acesso                                                                               |
+| DB_HOST     | Endereço do servidor do banco                                                                                               |
 | DB_PORT     | Porta de acesso ao banco                                                                                                    |
 | DB_USER     | Usuário de acesso                                                                                                           |
 | DB_PASSWORD | Senha de acesso                                                                                                             |
