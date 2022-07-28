@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,7 +16,9 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    await this.userRepository.save(createUserDto);
+    createUserDto.setPassword(createUserDto.password);
+
+    return await this.userRepository.save(createUserDto);
   }
 
   async findAll(): Promise<User[]> {
@@ -24,11 +26,20 @@ export class UserService {
   }
 
   async findOne(id: number): Promise<User> {
-    return this.userRepository.findOneByOrFail({ id });
+    let user: User;
+    try {
+      user = await this.userRepository.findOneByOrFail({ id });
+    } catch (error) {
+      throw new NotFoundException('Identificador Não Encontrado');
+    }
+
+    return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<void> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     await this.userRepository.update(id, updateUserDto);
+
+    return await this.findOne(id);
   }
 
   async remove(id: number): Promise<void> {
