@@ -16,16 +16,22 @@ export class UserService {
     return await this.userRepository.findOneByOrFail({ email });
   }
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     createUserDto.password = await hash(createUserDto.password, 10);
 
-    const { password, ...result } = await this.userRepository.save(createUserDto);
-    
+    const { password, ...result } = await this.userRepository.save(
+      createUserDto,
+    );
+
     return result;
   }
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return (await this.userRepository.find()).map((user: User) => {
+      let { password, ...result } = user;
+
+      return result;
+    });
   }
 
   async findOne(id: number): Promise<User> {
@@ -36,7 +42,9 @@ export class UserService {
       throw new NotFoundException('Identificador Não Encontrado');
     }
 
-    return user;
+    const { password, ...result } = user;
+
+    return result;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
