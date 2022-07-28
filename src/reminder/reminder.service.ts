@@ -18,11 +18,11 @@ export class ReminderService {
     return await this.reminderRepository.save(createReminderDto);
   }
 
-  async findAllByUser(userId: number) {
+  async findAllByUser(userId: number): Promise<Reminder[]> {
     return await this.reminderRepository.findBy({ userId });
   }
 
-  async get(id: number) {
+  async get(id: number): Promise<Reminder> {
     let reminder: Reminder;
     try {
       reminder = await this.reminderRepository.findOneByOrFail({ id });
@@ -33,7 +33,10 @@ export class ReminderService {
     return reminder;
   }
 
-  async update(id: number, updateReminderDto: UpdateReminderDto) {
+  async update(
+    id: number,
+    updateReminderDto: UpdateReminderDto,
+  ): Promise<Reminder> {
     await this.reminderRepository.update(id, updateReminderDto);
 
     return await this.get(id);
