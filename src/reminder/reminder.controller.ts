@@ -12,7 +12,7 @@ import {
 import { ReminderService } from './reminder.service';
 import { CreateReminderDto } from './dto/create-reminder.dto';
 import { UpdateReminderDto } from './dto/update-reminder.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../../src/auth/guards/jwt-auth.guard';
 
 @Controller('api/reminders')
 @UseGuards(JwtAuthGuard)
