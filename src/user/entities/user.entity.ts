@@ -22,4 +22,12 @@ export class User {
 
   @UpdateDateColumn({ select: false })
   updatedAt: Date;
+
+  constructor(user?: Partial<User>) {
+    user.id = this.id;
+    user.email = this.email;
+    user.password = this.password;
+    user.createdAt = this.createdAt;
+    user.updatedAt = this.updatedAt;
+  }
 }
