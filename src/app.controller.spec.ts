@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 
-const validatedUser = {
+const autenticatedUser = {
   user: {
     id: 1,
     email: 'teste@mail.com',
@@ -26,7 +26,7 @@ describe('AppController', () => {
         {
           provide: AuthService,
           useValue: {
-            login: jest.fn().mockResolvedValue(validatedUser),
+            login: jest.fn().mockResolvedValue(autenticatedUser),
           },
         },
       ],
@@ -57,7 +57,7 @@ describe('AppController', () => {
       const result = await appController.login(req);
 
       //Assert
-      expect(result).toEqual(validatedUser);
+      expect(result).toEqual(autenticatedUser);
       expect(authService.login).toHaveBeenCalledWith(req.user);
       expect(authService.login).toHaveBeenCalledTimes(1);
     });

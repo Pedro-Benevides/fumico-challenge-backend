@@ -141,7 +141,7 @@ describe('ReminderController', () => {
   });
 
   describe('get', () => {
-    it('should return a user', async () => {
+    it('should return a reminder', async () => {
       //Act
       const result = await reminderController.findOne('1');
 
@@ -231,7 +231,7 @@ describe('ReminderController', () => {
   });
 
   describe('remove', () => {
-    it('should return nothing', async () => {
+    it('should return the number of affeted rows', async () => {
       //Act
       const result = await reminderController.remove('1');
 
