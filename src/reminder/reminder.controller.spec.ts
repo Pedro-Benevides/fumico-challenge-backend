@@ -1,5 +1,4 @@
 import { NotFoundException } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtAuthGuard } from '../../src/auth/guards/jwt-auth.guard';
 import { CreateReminderDto } from './dto/create-reminder.dto';
@@ -58,6 +57,8 @@ describe('ReminderController', () => {
   let reminderService: ReminderService;
 
   beforeEach(async () => {
+    const mockJwtGuard = {};
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ReminderController],
       providers: [
@@ -71,9 +72,11 @@ describe('ReminderController', () => {
             remove: jest.fn().mockResolvedValue(deletedReminder),
           },
         },
-        JwtAuthGuard,
       ],
-    }).compile();
+    })
+      .overrideGuard(JwtAuthGuard)
+      .useValue(mockJwtGuard)
+      .compile();
 
     reminderController = module.get<ReminderController>(ReminderController);
     reminderService = module.get<ReminderService>(ReminderService);
