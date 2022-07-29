@@ -13,16 +13,23 @@ export class UserService {
   ) {}
 
   async findByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOneByOrFail({ email });
+    return await this.userRepository.findOneBy({ email });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     createUserDto.password = await hash(createUserDto.password, 10);
 
-    const { password, ...result } = await this.userRepository.save(
-      createUserDto,
-    );
+    const existingUser = await this.findByEmail(createUserDto.email);
 
+    let user: User;
+
+    if (existingUser) {
+      user = existingUser;
+    } else {
+      user = await this.userRepository.save(createUserDto);
+    }
+
+    const { password, ...result } = user;
     return result;
   }
 
