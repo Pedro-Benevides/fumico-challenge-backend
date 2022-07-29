@@ -25,7 +25,7 @@ export class ReminderController {
   }
 
   @Get('/users/:userId')
-  findAll(@Param('userId') userId: string) {
+  findAllByUser(@Param('userId') userId: string) {
     return this.reminderService.findAllByUser(+userId);
   }
 
